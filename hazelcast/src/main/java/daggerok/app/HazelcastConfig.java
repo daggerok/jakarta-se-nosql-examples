@@ -1,7 +1,6 @@
 package daggerok.app;
 
 import io.vavr.collection.HashMap;
-import io.vavr.collection.HashSet;
 import org.jnosql.diana.api.Settings;
 import org.jnosql.diana.api.key.BucketManager;
 import org.jnosql.diana.api.key.BucketManagerFactory;
@@ -10,8 +9,6 @@ import org.jnosql.diana.hazelcast.key.HazelcastKeyValueConfiguration;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
-
-import static java.util.Collections.singletonMap;
 
 @ApplicationScoped
 public class HazelcastConfig {

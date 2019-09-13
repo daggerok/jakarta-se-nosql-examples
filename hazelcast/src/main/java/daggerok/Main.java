@@ -12,7 +12,6 @@ import org.jnosql.artemis.key.KeyValueTemplate;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.se.SeContainer;
-import javax.enterprise.inject.se.SeContainerInitializer;
 import java.math.BigDecimal;
 import java.util.UUID;
 
