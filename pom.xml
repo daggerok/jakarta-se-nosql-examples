@@ -33,6 +33,7 @@
     <junit4.version>4.13-beta-3</junit4.version>
     <weld-se.version>3.1.2.Final</weld-se.version>
     <javax.inject.version>1</javax.inject.version>
+    <jandex-maven-plugin.version>1.0.6</jandex-maven-plugin.version>
     <capsule-maven-plugin.version>1.5.1</capsule-maven-plugin.version>
     <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
     <spotbugs-maven-plugin.version>3.1.12.2</spotbugs-maven-plugin.version>
@@ -158,6 +159,22 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.jboss.jandex</groupId>
+        <artifactId>jandex-maven-plugin</artifactId>
+        <version>${jandex-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>make-index</id>
+            <goals>
+              <goal>jandex</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 
   <profiles>
