@@ -45,7 +45,7 @@ jobs:
     name: test
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -DskipTests >/dev/null
-    - cd java -jar $TRAVIS_BUILD_DIR/hazelcast/target/*-all.jar
+    - java -jar $TRAVIS_BUILD_DIR/hazelcast/target/*-all.jar
   - stage: test
     jdk: openjdk8
     name: display-property-updates
