@@ -1,6 +1,8 @@
 package daggerok.app;
 
 import lombok.extern.log4j.Log4j2;
+import org.jnosql.artemis.Database;
+import org.jnosql.artemis.DatabaseType;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -11,13 +13,9 @@ import java.util.UUID;
 @ApplicationScoped
 public class BankAccountService {
 
-    private final BankAccountRepository repository;
-
     @Inject
-    public BankAccountService(BankAccountRepository repository) {
-        log.debug("injecting {}", repository.getClass());
-        this.repository = repository;
-    }
+    @Database(DatabaseType.KEY_VALUE)
+    private BankAccountRepository repository;
 
     public void save(BankAccount bankAccount) {
         log.debug("saving {}", bankAccount);
