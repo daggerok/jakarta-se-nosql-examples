@@ -1,4 +1,4 @@
-# jakarta-se-nosql-examples [![Build Status](https://travis-ci.org/daggerok/jakarta-se-nosql-examples.svg?branch=maven-java)](https://travis-ci.org/daggerok/jakarta-se-nosql-examples)
+# jakarta-se-nosql-examples [![Build Status](https://travis-ci.org/daggerok/jakarta-se-nosql-examples.svg?branch=master)](https://travis-ci.org/daggerok/jakarta-se-nosql-examples)
 Jakarta JNoSQL (by using Weld CDI)
 
 ## resources
