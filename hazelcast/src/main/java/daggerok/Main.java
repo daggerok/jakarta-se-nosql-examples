@@ -20,14 +20,14 @@ import java.util.UUID;
 public class Main {
 
     public static void main(String[] args) {
-        // Weld weld = new Weld().setClassLoader(Main.class.getClassLoader());              // (2.1)
-        try (WeldContainer context = new Weld().initialize()) {                             // (2.2)
+        // Weld weld = new Weld().setClassLoader(Main.class.getClassLoader());              // (1)
+        try (WeldContainer context = new Weld().initialize()) {                             // (2)
             useKeyValueTemplate(context);
             useBankAccountManager(context);
             useBankAccountService(context);
             useBankAccountRepository(context);
         }
-        // try (SeContainer context = SeContainerInitializer.newInstance().initialize()) {  // (1)
+        // try (SeContainer context = SeContainerInitializer.newInstance().initialize()) {  // (3)
         //     useKeyValueTemplate(context);
         //     useBankAccountManager(context);
         //     useBankAccountService(context);
