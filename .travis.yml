@@ -51,8 +51,10 @@ jobs:
     jdk: openjdk8
     name: display-property-updates
     script:
-    - cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-parent-updates versions:display-plugin-updates versions:display-dependency-updates -U >/dev/null
-    - cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-plugin-updates versions:display-parent-updates versions:display-dependency-updates
+#    - cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-parent-updates versions:display-plugin-updates versions:display-dependency-updates -U >/dev/null
+#    - cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-plugin-updates versions:display-parent-updates versions:display-dependency-updates
+    - cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-dependency-updates -U >/dev/null
+    - cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-dependency-updates
 #  - stage: test
 #    jdk: openjdk11
 #    name: display-property-updates jdk11
