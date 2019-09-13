@@ -1,0 +1,25 @@
+version: '2.1'
+networks:
+  applications:
+    driver: bridge
+services:
+  #hazelcast:
+  #  image: hazelcast/hazelcast:3.12.2
+  #  environment:
+  #    JAVA_OPTS: -Dhazelcast.local.publicAddress=0.0.0.0:5701
+  #  ports: ['5701:5701']
+  #  networks: [applications]
+  redis:
+    image: redis:5.0.5-alpine
+    ports: ['6379:6379']
+    command: redis-server --appendonly yes
+    networks: [applications]
+  redis-ui:
+    image: rediscommander/redis-commander:latest
+    environment:
+      REDIS_HOSTS: local:redis:6379
+      #REDIS_HOSTS: redis:redis:6379
+    depends_on: [redis]
+    ports: ['8081:8081']
+    links: ['redis:redis']
+    networks: [applications]

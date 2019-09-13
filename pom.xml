@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.daggerok</groupId>
+  <artifactId>jakarta-se-nosql-examples</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>hazelcast</module>
+  </modules>
+
+  <properties>
+    <mainClass/>
+
+    <java.version>1.8</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+
+    <encoding>UTF-8</encoding>
+    <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+
+    <diana.version>0.0.9</diana.version>
+    <log4j.version>2.12.1</log4j.version>
+    <artemis.version>0.0.9</artemis.version>
+    <lombok.version>1.18.10</lombok.version>
+    <cdi-api.version>2.0.SP1</cdi-api.version>
+    <slf4j.version>2.0.0-alpha0</slf4j.version>
+    <junit4.version>4.13-beta-3</junit4.version>
+    <weld-se.version>3.1.2.Final</weld-se.version>
+    <javax.inject.version>1</javax.inject.version>
+    <capsule-maven-plugin.version>1.5.1</capsule-maven-plugin.version>
+    <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
+    <spotbugs-maven-plugin.version>3.1.12.2</spotbugs-maven-plugin.version>
+    <docker-compose-maven-plugin.version>2.5.1</docker-compose-maven-plugin.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- JNoSQL -->
+      <dependency>
+        <groupId>org.jnosql.artemis</groupId>
+        <artifactId>artemis-core</artifactId>
+        <version>${artemis.version}</version>
+        <type>jar</type>
+      </dependency>
+      <!-- key-value -->
+      <dependency>
+        <groupId>org.jnosql.artemis</groupId>
+        <artifactId>artemis-key-value</artifactId>
+        <version>${artemis.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jnosql.diana</groupId>
+        <artifactId>hazelcast-driver</artifactId>
+        <version>${diana.version}</version>
+      </dependency>
+      <!-- cdi -->
+      <dependency>
+        <groupId>org.jboss.weld</groupId>
+        <artifactId>weld-core-parent</artifactId>
+        <version>${weld-se.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.weld</groupId>
+        <artifactId>weld-core-bom</artifactId>
+        <version>${weld-se.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.weld.servlet</groupId>
+        <artifactId>weld-servlet-core</artifactId>
+        <version>${weld-se.version}</version>
+        <scope>provided</scope>
+        <type>jar</type>
+      </dependency>
+      <!-- logging -->
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-bom</artifactId>
+        <version>${log4j.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <!-- in java we trust-->
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+        <optional>true</optional>
+        <scope>provided</scope>
+        <type>jar</type>
+      </dependency>
+      <dependency>
+        <groupId>io.vavr</groupId>
+        <artifactId>vavr</artifactId>
+        <version>0.10.2</version>
+        <type>jar</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <defaultGoal>clean package</defaultGoal>
+
+    <pluginManagement>
+      <plugins>
+        <!-- fat jar configurations -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>${maven-assembly-plugin.version}</version>
+          <configuration>
+            <finalName>${project.artifactId}-${project.version}-all</finalName>
+            <appendAssemblyId>false</appendAssemblyId>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+            <archive>
+              <manifest>
+                <mainClass>${mainClass}</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
+          <executions>
+            <execution>
+              <id>assemble-jar-with-dependencies</id>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>com.github.chrisdchristo</groupId>
+          <artifactId>capsule-maven-plugin</artifactId>
+          <version>${capsule-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>build</goal>
+              </goals>
+              <configuration>
+                <fileDesc>-all</fileDesc>
+                <appClass>${mainClass}</appClass>
+                <type>fat</type>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>assembly</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>capsule</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.chrisdchristo</groupId>
+            <artifactId>capsule-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <!-- ./mvnw -P docker -pl :jakarta-se-nosql-examples docker-compose:up -->
+      <id>docker</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.dkanejs.maven.plugins</groupId>
+            <artifactId>docker-compose-maven-plugin</artifactId>
+            <version>${docker-compose-maven-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>up</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>up</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>down</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>down</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <composeFiles>
+                <composeFile>${maven.multiModuleProjectDirectory}/docker-compose.yaml</composeFile>
+                <!--<composeFile>${project.basedir}/src/main/docker/docker-compose-override.yaml</composeFile>-->
+              </composeFiles>
+              <detachedMode>true</detachedMode>
+              <removeVolumes>true</removeVolumes>
+              <removeOrphans>true</removeOrphans>
+              <removeImages>true</removeImages>
+              <removeImagesType>local</removeImagesType>
+              <!--<projectName>my-cloud</projectName>-->
+              <build>true</build>
+              <detail>true</detail>
+              <verbose>false</verbose>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>
